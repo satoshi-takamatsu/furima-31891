@@ -1,24 +1,88 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# テーブル設計
+# _idは全て、ActiveHashのid
 
-Things you may want to cover:
+## users テーブル
+| Column          | Type        | Options                        |
+| --------------- | ----------- | ------------------------------ |
+| nickname        | string      | null: false                    |
+| email           | string      | null: false                    |
+| password        | string      | null: false                    |
 
-* Ruby version
+### Association
+- has_many :items
+- has_one :user_profile
 
-* System dependencies
 
-* Configuration
+## user_profiles テーブル
+| Column          | Type        | Options                        |
+| --------------- | ----------- | ------------------------------ |
+| last_name       | string      | null: false                    |
+| first_name      | string      | null: false                    |
+| last_name_kana  | string      | null: false                    |
+| first_name_kana | string      | null: false                    |
+| birth_year_id   | integer     | null: false                    | <!-- ActiveHash -->
+| birth_month_id  | integer     | null: false                    | <!-- ActiveHash -->
+| birth_day_id    | integer     | null: false                    | <!-- ActiveHash -->
+| users_id         | references  | null: false, foreign_key: true |
 
-* Database creation
+### Association
+- belongs_to :user
+- belongs_to :birth_year
+- belongs_to :birth_month
+- belongs_to :birth_day
 
-* Database initialization
 
-* How to run the test suite
+## items テーブル
+| Column           | Type        | Options                        |
+| ---------------- | ----------- | ------------------------------ |
+| product_name     | string      | null: false                    |
+| description      | text        | null: false                    |
+| price            | integer     | null: false                    |
+| category_id      | integer     | null: false                    | <!-- ActiveHash -->
+| state_id         | integer     | null: false                    | <!-- ActiveHash -->
+| delivery_fee_id  | integer     | null: false                    | <!-- ActiveHash -->
+| shipping_area_id | integer     | null: false                    | <!-- ActiveHash -->
+| days_to_ship_id  | integer     | null: false                    | <!-- ActiveHash -->
+| user_id          | references  | null: false, foreign_key: true |
+| buyer_id         | references  | null: false, foreign_key: true |
 
-* Services (job queues, cache servers, search engines, etc.)
+### Association
+- belongs_to :user
+- belongs_to :buyer
+- belongs_to :category
+- belongs_to :state
+- belongs_to :delivery_fee
+- belongs_to :shipping_area
+- belongs_to :days_to_ship
+- has_one_attached :image <!-- ActiveStorage -->
 
-* Deployment instructions
 
-* ...
+## buyers テーブル
+| Column                   | Type        | Options                        |
+| ------------------------ | ----------- | ------------------------------ |
+| credit_card_information  | integer     | null: false                    |
+| expiration_date_month    | integer     | null: false                    |
+| expiration_date_year     | integer     | null: false                    |
+| security_code            | integer     | null: false                    |
+
+### Association
+- has_many :items
+- has_one :shipping_address
+
+
+## shipping_addresses テーブル
+| Column                   | Type        | Options                        |
+| ------------------------ | ----------- | ------------------------------ |
+| postal_code              | integer     | null: false                    |
+| prefectures_id           | integer     | null: false                    | <!-- ActiveHash -->
+| municipality             | string      | null: false                    |
+| street_number            | string      | null: false                    |
+| building_name            | string      |                                |
+| telephone_number         | integer     | null: false                    |
+| buyer_id                 | references  | null: false, foreign_key: true |
+
+
+### Association
+- belongs_to :buyer
