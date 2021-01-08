@@ -4,34 +4,20 @@
 # _idは全て、ActiveHashのid
 
 ## users テーブル
-| Column          | Type        | Options                        |
-| --------------- | ----------- | ------------------------------ |
-| nickname        | string      | null: false                    |
-| email           | string      | null: false                    |
-| password        | string      | null: false                    |
+| Column             | Type        | Options                        |
+| ------------------ | ----------- | ------------------------------ |
+| nickname           | string      | null: false                    |
+| email              | string      | null: false                    |
+| encrypted_password | string      | unique: true                   |
+| last_name          | string      | null: false                    |
+| first_name         | string      | null: false                    |
+| last_name_kana     | string      | null: false                    |
+| first_name_kana    | string      | null: false                    |
+| birthday           | date        | null: false                    |
 
 ### Association
 - has_many :items
-- has_one :user_profile
-
-
-## user_profiles テーブル
-| Column          | Type        | Options                        |
-| --------------- | ----------- | ------------------------------ |
-| last_name       | string      | null: false                    |
-| first_name      | string      | null: false                    |
-| last_name_kana  | string      | null: false                    |
-| first_name_kana | string      | null: false                    |
-| birth_year_id   | integer     | null: false                    | <!-- ActiveHash -->
-| birth_month_id  | integer     | null: false                    | <!-- ActiveHash -->
-| birth_day_id    | integer     | null: false                    | <!-- ActiveHash -->
-| users_id         | references  | null: false, foreign_key: true |
-
-### Association
-- belongs_to :user
-- belongs_to :birth_year
-- belongs_to :birth_month
-- belongs_to :birth_day
+- has_many :buyer
 
 
 ## items テーブル
@@ -45,12 +31,11 @@
 | delivery_fee_id  | integer     | null: false                    | <!-- ActiveHash -->
 | shipping_area_id | integer     | null: false                    | <!-- ActiveHash -->
 | days_to_ship_id  | integer     | null: false                    | <!-- ActiveHash -->
-| user_id          | references  | null: false, foreign_key: true |
-| buyer_id         | references  | null: false, foreign_key: true |
+| user             | references  | null: false, foreign_key: true |
 
 ### Association
 - belongs_to :user
-- belongs_to :buyer
+- has_one :buyer
 - belongs_to :category
 - belongs_to :state
 - belongs_to :delivery_fee
@@ -60,15 +45,14 @@
 
 
 ## buyers テーブル
-| Column                   | Type        | Options                        |
-| ------------------------ | ----------- | ------------------------------ |
-| credit_card_information  | integer     | null: false                    |
-| expiration_date_month    | integer     | null: false                    |
-| expiration_date_year     | integer     | null: false                    |
-| security_code            | integer     | null: false                    |
+| Column           | Type        | Options                        |
+| ---------------- | ----------- | ------------------------------ |
+| user             | references  | null: false, foreign_key: true |
+| item             | references  | null: false, foreign_key: true |
 
 ### Association
-- has_many :items
+- belongs_to :user
+- belongs_to :item
 - has_one :shipping_address
 
 
@@ -76,13 +60,14 @@
 | Column                   | Type        | Options                        |
 | ------------------------ | ----------- | ------------------------------ |
 | postal_code              | integer     | null: false                    |
-| prefectures_id           | integer     | null: false                    | <!-- ActiveHash -->
+| shipping_area_id         | integer     | null: false                    | <!-- ActiveHash -->
 | municipality             | string      | null: false                    |
 | street_number            | string      | null: false                    |
 | building_name            | string      |                                |
 | telephone_number         | integer     | null: false                    |
-| buyer_id                 | references  | null: false, foreign_key: true |
+| buyer                    | references  | null: false, foreign_key: true |
 
 
 ### Association
 - belongs_to :buyer
+- belongs_to :shipping_area
