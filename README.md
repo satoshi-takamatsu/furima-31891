@@ -8,7 +8,7 @@
 | ------------------ | ----------- | ------------------------------ |
 | nickname           | string      | null: false                    |
 | email              | string      | null: false                    |
-| encrypted_password | string      | unique: true                   |
+| encrypted_password | string      | null: falser, unique: true     |
 | last_name          | string      | null: false                    |
 | first_name         | string      | null: false                    |
 | last_name_kana     | string      | null: false                    |
@@ -23,7 +23,7 @@
 ## items テーブル
 | Column           | Type        | Options                        |
 | ---------------- | ----------- | ------------------------------ |
-| product_name     | string      | null: false                    |
+| name             | string      | null: false                    |
 | description      | text        | null: false                    |
 | price            | integer     | null: false                    |
 | category_id      | integer     | null: false                    | <!-- ActiveHash -->
@@ -36,11 +36,6 @@
 ### Association
 - belongs_to :user
 - has_one :buyer
-- belongs_to :category
-- belongs_to :state
-- belongs_to :delivery_fee
-- belongs_to :shipping_area
-- belongs_to :days_to_ship
 - has_one_attached :image <!-- ActiveStorage -->
 
 
@@ -59,15 +54,14 @@
 ## shipping_addresses テーブル
 | Column                   | Type        | Options                        |
 | ------------------------ | ----------- | ------------------------------ |
-| postal_code              | integer     | null: false                    |
+| postal_code              | string      | null: false                    |
 | shipping_area_id         | integer     | null: false                    | <!-- ActiveHash -->
 | municipality             | string      | null: false                    |
 | street_number            | string      | null: false                    |
 | building_name            | string      |                                |
-| telephone_number         | integer     | null: false                    |
+| telephone_number         | string      | null: false                    |
 | buyer                    | references  | null: false, foreign_key: true |
 
 
 ### Association
 - belongs_to :buyer
-- belongs_to :shipping_area
