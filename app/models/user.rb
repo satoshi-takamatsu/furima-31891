@@ -11,7 +11,7 @@ class User < ApplicationRecord
     validates :encrypted_password, length: { minimum: 6 }
     validates :birthday, format: { with: /\A\d{4}-\d{2}-\d{2}\z/ }
 
-    with_options format: { with: /\A[ぁ-んァ-ン一-龥]/ } do
+    with_options format: { with: /\A[ぁ-んァ-ン一-龥々]/ } do #記憶の定着の為に記述 「々」の記述がないと、「々」が使用された時にエラーになってしまう
       validates :last_name
       validates :first_name
     end
