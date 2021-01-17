@@ -35,14 +35,14 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Price is not a number")
       end
       it "priceが300以下では登録できない" do
-        @item.price = "299"
+        @item.price = 299
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price must be greater than 300")
+        expect(@item.errors.full_messages).to include("Price must be greater than 299")
       end
       it "priceが9,999,999以上では登録できない" do
-        @item.price = "10000000"
+        @item.price = 10000000
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price must be less than 9999999")
+        expect(@item.errors.full_messages).to include("Price must be less than 10000000")
       end
       it "priceは半角英数字混合では登録できない" do
         @item.price = "1a2s3d"
@@ -65,7 +65,7 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("State is not a number")
       end
       it "state_idが1では登録できない" do
-        @item.state_id = "1"
+        @item.state_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("State must be other than 1")
       end
@@ -75,7 +75,7 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Delivery fee is not a number")
       end
       it "delivery_fee_idが1では登録できない" do
-        @item.delivery_fee_id = "1"
+        @item.delivery_fee_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Delivery fee must be other than 1")
       end
@@ -85,7 +85,7 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Shipping area is not a number")
       end
       it "shipping_area_idが1では登録できない" do
-        @item.shipping_area_id = "1"
+        @item.shipping_area_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping area must be other than 1")
       end
@@ -95,7 +95,7 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Day to ship is not a number")
       end
       it "day_to_ship_idが1では登録できない" do
-        @item.day_to_ship_id = "1"
+        @item.day_to_ship_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Day to ship must be other than 1")
       end
