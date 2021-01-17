@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :item do
-    user
+    association :user
     name                    { Faker::Commerce.product_name }
     description             { Faker::String.random(length: 1..1000) }
     price                   { Faker::Number.between(from: 300, to: 9999999) }

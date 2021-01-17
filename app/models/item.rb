@@ -15,15 +15,18 @@ class Item < ApplicationRecord
     validates :price,         numericality: { only_ineger: true, greater_than: 299, less_than: 10000000 },
                               format: { with: /\A[0-9]+\z/, message: 'Half-width number'}
     validates :image
+
+    with_options numericality: { other_than: 1 } do
+      validates :category_id
+      validates :state_id
+      validates :delivery_fee_id
+      validates :shipping_area_id
+      validates :day_to_ship_id
+    end
+
   end
 
-  with_options numericality: { other_than: 1 } do
-    validates :category_id
-    validates :state_id
-    validates :delivery_fee_id
-    validates :shipping_area_id
-    validates :day_to_ship_id
-  end
+
 
   def was_attached?
     self.image.attached?
