@@ -38,8 +38,14 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @item.destroy
-    redirect_to root_path
+    if user_signed_in?
+      if @item.user_id == current_user.id
+        @item.destroy
+        redirect_to root_path
+      end
+    else
+      redirect_to new_user_session_path
+    end
   end
   # /記憶の定着の為 before_actionを使いインスタンス変数の定義をまとめる
 
