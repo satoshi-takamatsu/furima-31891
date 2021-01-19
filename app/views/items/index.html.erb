@@ -131,7 +131,8 @@
         <li class='list'>
           <%= link_to "#" do %>
             <div class='item-img-content'>
-              <%= link_to image_tag(item.image.variant(resize: '300x300').processed), item_path(item.id), method: :get, class: "item-img" %>
+              <%= link_to image_tag(item.image.variant(resize: '300x300').processed), item_path(item.id), class: "item-img" %>
+              <%# 記憶の定着の為、上記の場合、method: :getは省略できる %>
 
               <%# 商品が売れていればsold outを表示しましょう %>
               <div class='sold-out'>
