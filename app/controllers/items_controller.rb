@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, only: [:new, :edit]
+  before_action :authenticate_user!, only: [:new, :edit, :destroy]
   
   def index
     @items = Item.includes(:user).order("created_at DESC")
@@ -38,13 +38,12 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    if user_signed_in?
-      if @item.user_id == current_user.id
-        @item.destroy
-        redirect_to root_path
-      end
+    if @item.user_id == current_user.id
+      @item.destroy
+      redirect_to root_path
     else
-      redirect_to new_user_session_path
+      render :show
+      # redirect_to action: :show こちらでも遷移するが、改めてリクエストを送信して遷移することになるので、renderを採用
     end
   end
   # /記憶の定着の為 before_actionを使いインスタンス変数の定義をまとめる
