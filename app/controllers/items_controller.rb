@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :edit]
+  before_action :set_item, only: [:show, :edit, :update]
   before_action :authenticate_user!, only: [:new, :edit]
   
   def index
@@ -28,16 +28,15 @@ class ItemsController < ApplicationController
       redirect_to root_path
     end
   end
-    # /記憶の定着の為 before_actionを使いインスタンス変数の定義をまとめる
 
   def update
-    @item = Item.find(params[:id])
     if @item.update(item_params)
       render :show
     else
       render :edit
     end
   end
+  # /記憶の定着の為 before_actionを使いインスタンス変数の定義をまとめる
 
   private
   
