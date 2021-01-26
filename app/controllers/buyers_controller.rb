@@ -1,12 +1,15 @@
 class BuyersController < ApplicationController
   
   def index
-    binding.pry
+    # binding.pry
     @buyer = Item.find(params[:item_id])
     @item = Item.new
   end
 
   def new
+  end
+
+  def create
   end
 
   private
