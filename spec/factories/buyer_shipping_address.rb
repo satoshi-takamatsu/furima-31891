@@ -1,10 +1,10 @@
 FactoryBot.define do
-  factory :buyer_shipping_aaddress do
-    postal_code
+  factory :buyer_shipping_address do
+    postal_code             { '123-4567' }
     shipping_area_id        { Faker::Number.between(from: 2, to: 48) }
-    municipality
-    street_number
-    building_name
+    municipality            { Gimei::city.kanji }
+    street_number           { '青山1-1-1' }
+    building_name           { '柳ビル103' }
     telephone_number        { Faker::Number.leading_zero_number(digits: 11) }
   end
 end
