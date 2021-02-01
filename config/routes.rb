@@ -6,6 +6,6 @@ Rails.application.routes.draw do
   
   resources :items, only: [:index, :new, :create, :show, :edit, :update] do
     delete 'items/:id' => 'items#destroy'
-    resources :buyers, only: [:index, :new]
+    resources :buyers, only: [:index, :new, :create]
   end
 end
