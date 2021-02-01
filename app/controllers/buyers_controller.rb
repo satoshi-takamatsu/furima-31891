@@ -2,6 +2,9 @@ class BuyersController < ApplicationController
   
   def index
     @item = Item.find(params[:item_id])
+    @buyer_shipping_address = BuyerShippingAddress.new(buyer_params)
+    # binding.pry
+    # @items = Item.includes(:user)
   end
 
   def new
