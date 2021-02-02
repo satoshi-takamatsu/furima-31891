@@ -2,10 +2,8 @@ class BuyersController < ApplicationController
   
   def index
     @item = Item.find(params[:item_id])
-    @buyer_shipping_address = BuyerShippingAddress.new(buyer_params)
-    # binding.pry
-    # @items = Item.includes(:user)
-  end
+    @buyer_shipping_address = BuyerShippingAddress.new
+  end 
 
   def new
     @buyer_shipping_address = BuyerShippingAddress.new
@@ -23,9 +21,9 @@ class BuyersController < ApplicationController
   end
 
   private
-  
+
   def buyer_params
-    params.permit(:postal_code, :shipping_area_id, :municipality, :street_number, :building_name, :telephone_number).merge(user_id: current_user.id, item_id: params[:item_id])
+    params.require(:buyer_shipping_address).permit(:postal_code, :shipping_area_id, :municipality, :street_number, :building_name, :telephone_number).merge(user_id: current_user.id, item_id: params[:item_id])
   end
 
 end
