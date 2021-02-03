@@ -27,8 +27,6 @@ class Item < ApplicationRecord
 
   end
 
-
-
   def was_attached?
     self.image.attached?
   end
