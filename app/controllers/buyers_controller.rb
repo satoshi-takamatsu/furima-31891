@@ -1,17 +1,20 @@
 class BuyersController < ApplicationController
   before_action :authenticate_user!
+  before_action :buyer_set_item, only: [:index, :create]
+  before_action :buyer_set_shipping_address, only: [:index, :new]
   
   def index
-    @item = Item.find(params[:item_id])
-    @buyer_shipping_address = BuyerShippingAddress.new
+    if @item.buyer.present?
+      @item.user_id == current_user.id
+      redirect_to root_path
+    end
   end 
 
   def new
-    @buyer_shipping_address = BuyerShippingAddress.new
   end
 
   def create
-    @item = Item.find(params[:item_id])
+    # @item = Item.find(params[:item_id]) 記憶の定着の為 before_actionでまとめる
     @buyer_shipping_address = BuyerShippingAddress.new(buyer_params)
     if @buyer_shipping_address.valid?
       pay_item
@@ -37,12 +40,12 @@ class BuyersController < ApplicationController
     )
   end
 
-  def authenticate_user!
-    if user_signed_in?
-      redirect_to root_path
-    else
-      redirect_to root_path
-    end
+  def buyer_set_item
+    @item = Item.find(params[:item_id])
+  end
+
+  def buyer_set_shipping_address
+    @buyer_shipping_address = BuyerShippingAddress.new
   end
 
 end
