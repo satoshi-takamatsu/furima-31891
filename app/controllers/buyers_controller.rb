@@ -4,8 +4,9 @@ class BuyersController < ApplicationController
   before_action :buyer_set_shipping_address, only: [:index, :new]
   
   def index
-    if @item.buyer.present?
-      @item.user_id == current_user.id
+    if @item.user_id == current_user.id
+      redirect_to root_path
+    elsif @item.buyer.present?
       redirect_to root_path
     end
   end 
