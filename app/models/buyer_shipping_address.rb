@@ -9,11 +9,11 @@ class BuyerShippingAddress
     validates :municipality,     format: { with: /\A[ぁ-んァ-ン一-龥々]/, message: "is invalid. Input full-width characters." }
     validates :street_number    # format: { with: /\A[ぁ-んァ-ン一-龥]/ }
     validates :telephone_number, format: { with: /\A\d{11}\z/ }
-    validates :token
+
   end
 
   def save
     Buyer.create(user_id: user_id, item_id: item_id)
-    ShippingAddress.create(postal_code: postal_code, shipping_area_id: shipping_area_id, municipality: municipality, street_number: street_number, building_name: building_name, telephone_number: telephone_number, buyer_id: user_id )
+    ShippingAddress.create(postal_code: postal_code, shipping_area_id: shipping_area_id, municipality: municipality, street_number: street_number, building_name: building_name, telephone_number: telephone_number, buyer_id: item_id )
   end
 end

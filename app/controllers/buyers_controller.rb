@@ -1,18 +1,13 @@
 class BuyersController < ApplicationController
   before_action :authenticate_user!
   before_action :buyer_set_item, only: [:index, :create]
-  before_action :buyer_set_shipping_address, only: [:index, :new]
+  before_action :buyer_set_shipping_address, only: :index
   
   def index
-    if @item.user_id == current_user.id
-      redirect_to root_path
-    elsif @item.buyer.present?
+    if @item.user_id == current_user.id || @item.buyer.present?
       redirect_to root_path
     end
   end 
-
-  def new
-  end
 
   def create
     # @item = Item.find(params[:item_id]) 記憶の定着の為 before_actionでまとめる
