@@ -9,7 +9,9 @@ class BuyerShippingAddress
     validates :municipality,     format: { with: /\A[ぁ-んァ-ン一-龥々]/, message: "is invalid. Input full-width characters." }
     validates :street_number    # format: { with: /\A[ぁ-んァ-ン一-龥]/ }
     validates :telephone_number, format: { with: /\A\d{11}\z/ }
-
+    validates :token
+    validates :user_id
+    validates :item_id
   end
 
   def save
