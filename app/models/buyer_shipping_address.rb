@@ -1,7 +1,7 @@
 class BuyerShippingAddress
 
   include ActiveModel::Model
-  attr_accessor :user_id, :item_id, :postal_code, :shipping_area_id, :municipality, :street_number, :building_name, :telephone_number, :token
+  attr_accessor :user_id, :item_id, :buyer_id, :postal_code, :shipping_area_id, :municipality, :street_number, :building_name, :telephone_number, :token
 
   with_options presence: true do
     validates :postal_code,      format: { with: /\A\d{3}[-]\d{4}\z/, message: "is invalid. Include hyphen(-)"}
@@ -15,7 +15,7 @@ class BuyerShippingAddress
   end
 
   def save
-    Buyer.create(user_id: user_id, item_id: item_id)
-    ShippingAddress.create(postal_code: postal_code, shipping_area_id: shipping_area_id, municipality: municipality, street_number: street_number, building_name: building_name, telephone_number: telephone_number, buyer_id: item_id )
+    buyer = Buyer.create(user_id: user_id, item_id: item_id)
+    ShippingAddress.create(postal_code: postal_code, shipping_area_id: shipping_area_id, municipality: municipality, street_number: street_number, building_name: building_name, telephone_number: telephone_number, buyer_id: buyer.id )
   end
 end

@@ -14,6 +14,10 @@ RSpec.describe BuyerShippingAddress, type: :model do
       it "tokenがあれば保存ができること" do
         expect(@buyer_shipping_address).to be_valid
       end
+      it "builiding_nameが空でも保存できること" do
+        @buyer_shipping_address.building_name = nil
+        expect(@buyer_shipping_address).to be_valid
+      end
     end
 
     context "商品購入ができないとき" do
@@ -42,10 +46,6 @@ RSpec.describe BuyerShippingAddress, type: :model do
         @buyer_shipping_address.valid?
         expect(@buyer_shipping_address.errors.full_messages).to include("Municipality can't be blank")
       end
-      it "builiding_nameが空でも保存できること" do
-        @buyer_shipping_address.building_name = nil
-        expect(@buyer_shipping_address).to be_valid
-      end
       it "telephone_numberが空では登録できない" do
         @buyer_shipping_address.telephone_number = nil
         @buyer_shipping_address.valid?
@@ -58,6 +58,16 @@ RSpec.describe BuyerShippingAddress, type: :model do
       end
       it "telephone_numberは全角では保存ができないこと" do
         @buyer_shipping_address.telephone_number = '１２３４５６７８９００'
+        @buyer_shipping_address.valid?
+        expect(@buyer_shipping_address.errors.full_messages).to include("Telephone number is invalid")
+      end
+      it "telephone_numberは半角英数混合だと登録できないこと" do
+        @buyer_shipping_address.telephone_number = '123４５６７8900'
+        @buyer_shipping_address.valid?
+        expect(@buyer_shipping_address.errors.full_messages).to include("Telephone number is invalid")
+      end
+      it "telephone_numberは12桁以上だと登録できないこと" do
+        @buyer_shipping_address.telephone_number = "1234567890012"
         @buyer_shipping_address.valid?
         expect(@buyer_shipping_address.errors.full_messages).to include("Telephone number is invalid")
       end
