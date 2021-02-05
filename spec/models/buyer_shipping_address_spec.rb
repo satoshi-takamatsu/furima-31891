@@ -52,7 +52,7 @@ RSpec.describe BuyerShippingAddress, type: :model do
         expect(@buyer_shipping_address.errors.full_messages).to include("Telephone number can't be blank")
       end
       it "telephone_numberが11桁以内でないと保存できないこと" do
-        @buyer_shipping_address.telephone_number = '12345678'
+        @buyer_shipping_address.telephone_number = '1234567890'
         @buyer_shipping_address.valid?
         expect(@buyer_shipping_address.errors.full_messages).to include("Telephone number is invalid")
       end
@@ -62,7 +62,7 @@ RSpec.describe BuyerShippingAddress, type: :model do
         expect(@buyer_shipping_address.errors.full_messages).to include("Telephone number is invalid")
       end
       it "telephone_numberは半角英数混合だと登録できないこと" do
-        @buyer_shipping_address.telephone_number = '123４５６７8900'
+        @buyer_shipping_address.telephone_number = '123asdf8900'
         @buyer_shipping_address.valid?
         expect(@buyer_shipping_address.errors.full_messages).to include("Telephone number is invalid")
       end

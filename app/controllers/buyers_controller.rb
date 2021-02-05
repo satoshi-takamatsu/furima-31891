@@ -2,11 +2,9 @@ class BuyersController < ApplicationController
   before_action :authenticate_user!
   before_action :buyer_set_item, only: [:index, :create]
   before_action :buyer_set_shipping_address, only: :index
+  before_action :buyer_page_transition, only: [:index, :create]
   
   def index
-    if @item.user_id == current_user.id || @item.buyer.present?
-      redirect_to root_path
-    end
   end 
 
   def create
@@ -42,6 +40,12 @@ class BuyersController < ApplicationController
 
   def buyer_set_shipping_address
     @buyer_shipping_address = BuyerShippingAddress.new
+  end
+
+  def buyer_page_transition
+    if @item.user_id == current_user.id || @item.buyer.present?
+      redirect_to root_path
+    end
   end
 
 end
