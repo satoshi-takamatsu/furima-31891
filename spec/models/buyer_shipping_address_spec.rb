@@ -67,7 +67,7 @@ RSpec.describe BuyerShippingAddress, type: :model do
         expect(@buyer_shipping_address.errors.full_messages).to include("Telephone number is invalid")
       end
       it "telephone_numberは12桁以上だと登録できないこと" do
-        @buyer_shipping_address.telephone_number = "1234567890012"
+        @buyer_shipping_address.telephone_number = "123456789001"
         @buyer_shipping_address.valid?
         expect(@buyer_shipping_address.errors.full_messages).to include("Telephone number is invalid")
       end
