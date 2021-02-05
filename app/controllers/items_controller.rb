@@ -19,12 +19,11 @@ class ItemsController < ApplicationController
     end
   end
 
-  # 記憶の定着の為 before_actionを使いインスタンス変数の定義をまとめる
   def show
   end
 
   def edit
-    unless @item.user_id == current_user.id
+    if @item.buyer.present? || @item.user_id != current_user.id
       redirect_to root_path
     end
   end
@@ -43,10 +42,8 @@ class ItemsController < ApplicationController
       redirect_to root_path
     else
       render :show
-      # redirect_to action: :show こちらでも遷移するが、改めてリクエストを送信して遷移することになるので、renderを採用
     end
   end
-  # /記憶の定着の為 before_actionを使いインスタンス変数の定義をまとめる
 
   private
   
